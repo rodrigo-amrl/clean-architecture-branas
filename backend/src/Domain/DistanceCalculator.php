@@ -19,6 +19,6 @@ class DistanceCalculator
 			sin($deltaLon / 2);
 		$c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 		$distance = $earthRadius * $c;
-		return round($distance);
+		return floatval(round($distance));
 	}
 }

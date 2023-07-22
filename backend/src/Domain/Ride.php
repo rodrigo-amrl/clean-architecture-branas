@@ -7,7 +7,7 @@ class Ride
 	const MIN_PRICE = 10;
 
 
-	public function __construct(protected array $positions)
+	public function __construct(protected array $positions = [])
 	{
 	}
 
@@ -27,6 +27,6 @@ class Ride
 			$fareCalculator = FareCalculatorFactory::create($segment);
 			$price += $fareCalculator->calculate($segment);
 		}
-		return max($price, self::MIN_PRICE);
+		return round(max($price, self::MIN_PRICE), 2);
 	}
 }

@@ -8,4 +8,4 @@ test("Deve calcular a distância entre duas coordenadas", function () {
 	$to = new Coord(-27.496887588317275, -48.522234807851476);
 	$distance = DistanceCalculator::calculate($from, $to);
 	expect($distance)->toBe(10.0);
-})->only();
+});

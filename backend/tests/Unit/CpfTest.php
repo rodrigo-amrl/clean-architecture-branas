@@ -5,8 +5,6 @@
 use Src\Domain\Cpf;
 
 
-
-
 test('Deve testar cpf valido', function () {
 	$cpf = new Cpf("83432616074");
 	expect($cpf)->toBeObject();

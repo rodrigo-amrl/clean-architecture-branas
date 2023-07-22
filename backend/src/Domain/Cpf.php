@@ -6,14 +6,14 @@ use Exception;
 
 class Cpf
 {
-	public function __construct(protected string $cpf)
+	public function __construct(public string $value)
 	{
 		if (!$this->validate()) throw new Exception("Invalid cpf");
 	}
 
 	private function validate()
 	{
-		$this->cpf = $this->clean();
+		$this->value = $this->clean();
 		if ($this->isValidLength()) return false;
 		if ($this->hasAllDigitsEqual()) return false;
 		$dg1 = $this->calculateDigit(10);
@@ -23,18 +23,18 @@ class Cpf
 
 	private function clean()
 	{
-		return preg_replace('/\D/', '', $this->cpf);
+		return preg_replace('/\D/', '', $this->value);
 	}
 
 	private function isValidLength()
 	{
-		return strlen($this->cpf) !== 11;
+		return strlen($this->value) !== 11;
 	}
 
 	private function hasAllDigitsEqual()
 	{
-		$primeiro_digito = $this->cpf[0];
-		return array_reduce(str_split($this->cpf), function ($acumulador, $digito) use ($primeiro_digito) {
+		$primeiro_digito = $this->value[0];
+		return array_reduce(str_split($this->value), function ($acumulador, $digito) use ($primeiro_digito) {
 			return $acumulador && ($digito === $primeiro_digito);
 		}, true);
 	}
@@ -42,9 +42,9 @@ class Cpf
 	private  function calculateDigit(int $fator)
 	{
 		$total = 0;
-		for ($i = 0; $i < strlen($this->cpf); $i++) {
+		for ($i = 0; $i < strlen($this->value); $i++) {
 			if ($fator > 1) {
-				$total += intval($this->cpf[$i]) * $fator--;
+				$total += intval($this->value[$i]) * $fator--;
 			}
 		}
 		$resto = $total % 11;
@@ -53,6 +53,6 @@ class Cpf
 
 	private function extractCheckDigit()
 	{
-		return substr($this->cpf, 9);
+		return substr($this->value, 9);
 	}
 }
