@@ -8,9 +8,10 @@ class MainController
     public function __construct()
     {
     }
-    public function index()
+    public function calculateRide(Request $request, calculateRide $calculateRide)
     {
 
-        die('aqui');
+        $output = calculateRide::execute(body);
+        return output;
     }
 }
