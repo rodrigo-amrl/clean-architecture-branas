@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\Application\Controllers;
+namespace Src\Infra\Http\Controllers;
 
-class Controller
+class MainController
 {
 
     public function __construct()
