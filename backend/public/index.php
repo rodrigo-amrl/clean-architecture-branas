@@ -7,4 +7,5 @@ ini_set('memory_limit', -1);
 error_reporting(E_ALL);
 
 define('BASE_DIR', __DIR__);
-require_once  '../src/Infra/Config/Route.php';
+
+require_once  '../src/main_api.php';

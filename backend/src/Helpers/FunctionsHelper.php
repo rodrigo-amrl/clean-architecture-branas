@@ -23,3 +23,7 @@ if (!function_exists('format_date')) {
         return  date('Y-m-d' . $datetime, strtotime(str_replace('/', '-', $data))) . $hour;
     }
 }
+function dd_test($data)
+{
+    throw new \Exception(json_encode($data));
+}
