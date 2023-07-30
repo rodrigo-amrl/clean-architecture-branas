@@ -2,13 +2,22 @@
 
 namespace Src\Domain;
 
+use DateTime;
+
 class Ride
 {
 	const MIN_PRICE = 10;
+	protected Position $positions;
 
-
-	public function __construct(protected array $positions = [])
-	{
+	public function __construct(
+		public readonly string $ride_id,
+		public readonly string $passenger_id,
+		public readonly Coord $from,
+		public readonly Coord $to,
+		public readonly string $status,
+		public readonly Date $request_date
+	) {
+		$this->positions = [];
 	}
 
 	public function addPosition(float $lat, float $long, Date $date)
@@ -28,5 +37,11 @@ class Ride
 			$price += $fareCalculator->calculate($segment);
 		}
 		return round(max($price, self::MIN_PRICE), 2);
+	}
+	public static function create(string $passenger_id, Coord $from, Coord $to, Date $request_date = new DateTime())
+	{
+		$ride_id = uniqid();
+		$status = "requested";
+		return new Ride($ride_id, $passenger_id, $from, $to, $status, $request_date);
 	}
 }
