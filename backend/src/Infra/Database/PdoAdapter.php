@@ -6,7 +6,7 @@ use PDO;
 
 class PdoAdapter implements DatabaseConnectionInterface
 {
-	private $connection;
+	private $connection, $query;
 
 	public function __construct()
 	{
@@ -14,8 +14,12 @@ class PdoAdapter implements DatabaseConnectionInterface
 	}
 	public function query(string $statement,  $params)
 	{
-		$query = $this->connection->prepare($statement);
-		return $query->execute($params);
+		$this->query = $this->connection->prepare($statement);
+		return $this->query->execute($params);
+	}
+	public function getRow()
+	{
+		return	$this->query->fetch(PDO::FETCH_OBJ);
 	}
 	public function close(): void
 	{

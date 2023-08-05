@@ -9,7 +9,7 @@ class Passenger
 	public Cpf $document;
 
 	public function __construct(
-		public  readonly string $passengerId,
+		public  readonly string $passenger_id,
 		public readonly string $name,
 		string $email,
 		string $document
@@ -20,7 +20,7 @@ class Passenger
 
 	public static function create(string $name, string $email, string $document)
 	{
-		$passengerId = uniqid();
-		return new Passenger($passengerId, $name, $email, $document);
+		$passenger_id = uniqid();
+		return new Passenger($passenger_id, $name, $email, $document);
 	}
 }

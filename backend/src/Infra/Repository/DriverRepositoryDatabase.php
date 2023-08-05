@@ -14,14 +14,25 @@ class DriverRepositoryDatabase implements DriverRepository
 	}
 	public function  save(Driver $driver): void
 	{
+		$insert = [
+			$driver->driver_id,
+			$driver->name,
+			$driver->email->value,
+			$driver->document->value,
+			$driver->car_plate->value
+		];
+
 		$this->connection->query(
-			"insert into cccat12.driver (driver_id, name, email, document, car_plate) values ($1, $2, $3, $4, $5)",
-			[$driver->driverId, $driver->name, $driver->email->value, $driver->document->value, $driver->carPlate->value]
+			"insert into drivers (driver_id, name, email, document, car_plate) values (?, ?, ?, ?, ?)",
+			$insert
+
 		);
 	}
 	public function  get(string $driver_id): Driver
 	{
-		$driver_data =  $this->connection->query("select * from cccat12.driver where driver_id = $1", [$driver_id]);
+		$this->connection->query("select * from drivers where driver_id = ?", [$driver_id]);
+
+		$driver_data = $this->connection->getRow();
 		return new Driver(
 			$driver_data->driver_id,
 			$driver_data->name,
