@@ -3,11 +3,13 @@
 namespace Src\Domain;
 
 use DateTime;
+use Src\Domain\Date;
+
 
 class Ride
 {
 	const MIN_PRICE = 10;
-	protected Position $positions;
+	protected array $positions;
 
 	public function __construct(
 		public readonly string $ride_id,
@@ -22,7 +24,7 @@ class Ride
 
 	public function addPosition(float $lat, float $long, Date $date)
 	{
-		$this->positions[] = (new Position($lat, $long, $date));
+		$this->positions[] = new Position($lat, $long, $date);
 	}
 
 	public function calculate()
@@ -38,10 +40,10 @@ class Ride
 		}
 		return round(max($price, self::MIN_PRICE), 2);
 	}
-	public static function create(string $passenger_id, Coord $from, Coord $to, Date $request_date = new DateTime())
+	public static function create(string $passenger_id, Coord $from, Coord $to)
 	{
 		$ride_id = uniqid();
 		$status = "requested";
-		return new Ride($ride_id, $passenger_id, $from, $to, $status, $request_date);
+		return new Ride($ride_id, $passenger_id, $from, $to, $status, new Date(date('Y-m-d H:i:s')));
 	}
 }

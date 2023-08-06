@@ -1,14 +1,18 @@
-
-
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Src\Domain\Cpf;
 
-
-test('Deve testar cpf valido', function () {
-	$cpf = new Cpf("83432616074");
-	expect($cpf)->toBeObject();
-});
-test('Não deve permitir cpf inválido', function () {
-	expect(fn () => new Cpf("99999999999"))->toThrow("Invalid cpf");
-});
+final class CpfTest extends TestCase
+{
+	public function testCpfValido()
+	{
+		$cpf = new Cpf("83432616074");
+		$this->assertIsObject($cpf);
+	}
+	public function testCpfInvalido()
+	{
+		$this->expectExceptionMessage('Invalid cpf');
+		new Cpf("99999999999");
+	}
+}

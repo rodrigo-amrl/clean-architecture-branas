@@ -1,13 +1,18 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Src\Domain\Email;
 
-test("Deve validar o email", function () {
-	$email = new Email("john.doe@gmail.com");
-	expect($email)->toBeTruthy();
-});
-
-test("Não deve validar um email inválido", function () {
-	$email = "john.doe@gmail";
-	expect(fn () => new Email($email))->toThrow("Invalid email");
-});
+final class EmailTest extends TestCase
+{
+	public function testEmailValido()
+	{
+		$email = new Email("john.doe@gmail.com");
+		$this->assertIsObject($email);
+	}
+	public function testEmailInvalido()
+	{
+		$this->expectExceptionMessage('Invalid email');
+		new Email("john.doe@gmail");
+	}
+}

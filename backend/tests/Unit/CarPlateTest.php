@@ -1,12 +1,18 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Src\Domain\CarPlate;
 
-test('Deve testar uma placa válida', function () {
-    $carPlate = new CarPlate("AAA9999");
-    expect($carPlate)->toBeObject();
-});
-
-test("Não deve permitir placa inválida", function () {
-    expect(fn () => new CarPlate("AAA999"))->toThrow("Invalid car plate");
-});
+final class CarPlateTest extends TestCase
+{
+    public function testPlacaValida()
+    {
+        $carPlate = new CarPlate("AAA9999");
+        $this->assertIsObject($carPlate);
+    }
+    public function testPlacaInvalida()
+    {
+        $this->expectExceptionMessage('Invalid car plate');
+        new CarPlate("AAA999");
+    }
+}
